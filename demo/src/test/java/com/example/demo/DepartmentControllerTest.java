@@ -42,7 +42,7 @@ public class DepartmentControllerTest {
 
         when(dService.getAllDepartments()).thenReturn(departments);
 
-        mockMvc.perform(get("/departments"))
+        mockMvc.perform(get("/api/departments/"))
                 .andExpect(status().isOk());
     }
 
@@ -52,7 +52,7 @@ public class DepartmentControllerTest {
 
     when(dService.getDepartmentById(1L)).thenReturn(dto);
 
-    mockMvc.perform(get("/departments/1"))
+    mockMvc.perform(get("/api/departments/1"))
             .andExpect(status().isOk());
     }
 
@@ -64,7 +64,7 @@ public class DepartmentControllerTest {
         when(dService.createNewDepartment(any(DepartmentDTO.class))).thenReturn(dto);
         when(deptRepo.save(any(Department.class))).thenReturn(savedDept);
 
-        mockMvc.perform(post("/departments")
+        mockMvc.perform(post("/api/departments/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk());  // or .isCreated() if you return 201
@@ -77,7 +77,7 @@ public class DepartmentControllerTest {
 
         when(dService.updateDepartment(eq(dto), eq(1L))).thenReturn(updated);
 
-        mockMvc.perform(put("/departments/1")
+        mockMvc.perform(put("/api/departments/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk());
@@ -87,7 +87,7 @@ public class DepartmentControllerTest {
     void deleteDepartment_shouldReturnNoContent() throws Exception {
         doNothing().when(dService).deleteDepartment(1L);
 
-        mockMvc.perform(delete("/departments/1"))
+        mockMvc.perform(delete("/api/departments/1"))
                 .andExpect(status().isNoContent());
     }
 
@@ -100,7 +100,7 @@ public class DepartmentControllerTest {
 
     when(dService.getEmployeesInDepartment(1L)).thenReturn(employees);
 
-        mockMvc.perform(get("/departments/1/employees"))
+        mockMvc.perform(get("/api/departments/1/employees"))
                 .andExpect(status().isOk());
     }
 
@@ -113,7 +113,7 @@ public class DepartmentControllerTest {
 
         when(dService.getDepartmentUnderManager("Alice")).thenReturn(depts);
 
-        mockMvc.perform(get("/departments/manager/Alice"))
+        mockMvc.perform(get("/api/departments/manager/Alice"))
                 .andExpect(status().isOk());
     }
 }

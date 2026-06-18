@@ -2,14 +2,15 @@ package com.example.demo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest(classes = PayrollApplication.class)
-@ActiveProfiles("test")
 class PayrollApplicationTests {
 
 	@Test
 	void contextLoads() {
+		System.out.println("DB_URL=" + System.getenv("DB_URL"));
+    	System.out.println("DB_USER=" + System.getenv("DB_USER"));
+    	System.out.println("DB_pass=" + System.getenv("DB_pass"));
 	}
 
 }

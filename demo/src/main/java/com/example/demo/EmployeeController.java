@@ -11,6 +11,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
+@RequestMapping("/api/employees")
+@CrossOrigin("https://localhost:3000")
 public class EmployeeController {
 
     @Autowired
@@ -35,36 +38,36 @@ public class EmployeeController {
     }
 
     // GET all employees
-    @GetMapping("/employees")
+    @GetMapping("/")
     List<EmployeeDTO> all(){
         return eService.getAllEmployee();
     }
 
-    @GetMapping("/employees/role/{role}")
+    @GetMapping("/role/{role}")
     List<Employee> specificRole(@PathVariable String role){
         return repository.findEmployeesWithCustomRole(role);
     }
 
      // GET one employee by ID
-    @GetMapping("/employees/{id}")
+    @GetMapping("/{id}")
     EmployeeDTO one(@PathVariable Long id){
         return eService.getEmployeeByID(id);
     }
     // POST - add a new employee
-    @PostMapping("/employees")
+    @PostMapping("/")
     public ResponseEntity<EmployeeDTO> newEmployee(@RequestBody EmployeeDTO dto) {
         EmployeeDTO savedEmp =  eService.createEmployee(dto);
         return new ResponseEntity<EmployeeDTO>(savedEmp, HttpStatus.CREATED);
     }
 
     // PUT - update or create employee
-    @PutMapping("/employees/{id}")
+    @PutMapping("/{id}")
     EmployeeDTO replaceEmployee(@RequestBody EmployeeDTO dto, @PathVariable Long id) {
         return eService.updateEmployee(id, dto);
     }
 
     // DELETE - remove an employee
-    @DeleteMapping("/employees/{id}")
+    @DeleteMapping("/{id}")
     void deleteEmployee(@PathVariable Long id) {
         eService.deleteEmployee(id);
     }

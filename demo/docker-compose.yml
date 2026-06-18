@@ -3,8 +3,9 @@ services:
     image: mysql:8.0
     environment:
       MYSQL_DATABASE: demo_spring
-      MYSQL_ROOT_PASSWORD: pass@123
-      MYSQL_PASSWORD: pass@123
+      MYSQL_USER: payrolltest
+      MYSQL_ROOT_PASSWORD: simple123
+      MYSQL_PASSWORD: simple123
     ports:
       - "3307:3306"
     volumes:
@@ -19,8 +20,8 @@ services:
       - db
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/demo_spring?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: pass@123
+      SPRING_DATASOURCE_USERNAME: payrolltest
+      SPRING_DATASOURCE_PASSWORD: simple123
 
 volumes:
   db-data:

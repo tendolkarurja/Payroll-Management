@@ -38,7 +38,7 @@ public class EmployeeControllerTest {
 
         when(eService.getAllEmployee()).thenReturn(List.of(emp1, emp2));
 
-        mockMvc.perform(get("/employees"))
+        mockMvc.perform(get("/api/employees/"))
                 .andExpect(status().isOk());
     }
 
@@ -48,7 +48,7 @@ public class EmployeeControllerTest {
 
         when(eService.getEmployeeByID(1L)).thenReturn(emp);
 
-        mockMvc.perform(get("/employees/1"))
+        mockMvc.perform(get("/api/employees/1"))
                 .andExpect(status().isOk());
     }
 
@@ -57,7 +57,7 @@ public class EmployeeControllerTest {
         EmployeeDTO dto = new EmployeeDTO("David", "Tester", 1L);
         when(eService.createEmployee(any(EmployeeDTO.class))).thenReturn(dto);
 
-        mockMvc.perform(post("/employees")
+        mockMvc.perform(post("/api/employees/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isCreated());
@@ -70,7 +70,7 @@ public class EmployeeControllerTest {
 
         when(eService.updateEmployee(eq(1L), any(EmployeeDTO.class))).thenReturn(updatedEmp);
 
-        mockMvc.perform(put("/employees/1")
+        mockMvc.perform(put("/api/employees/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk());
@@ -80,7 +80,7 @@ public class EmployeeControllerTest {
     void deleteEmployee_shouldReturnNoContent() throws Exception {
         doNothing().when(eService).deleteEmployee(1L);
 
-        mockMvc.perform(delete("/employees/1"))
+        mockMvc.perform(delete("/api/employees/1"))
                 .andExpect(status().isOk());
     }
 
@@ -91,7 +91,7 @@ public class EmployeeControllerTest {
 
         when(repository.findEmployeesWithCustomRole("Dev")).thenReturn(List.of(emp1, emp2));
 
-        mockMvc.perform(get("/employees/role/Dev"))
+        mockMvc.perform(get("/api/employees/role/Dev"))
                 .andExpect(status().isOk());
     }
 }
